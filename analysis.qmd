@@ -2,4 +2,35 @@
 title: "Smokes"
 author: "Harshil Kurapati"
 format: html
+execute:
+  echo: false
 ---
+
+```{r}
+#| message: false
+library(tidyverse)
+library(primer.tutorials)
+```
+
+```{r}
+smokes |>
+  mutate(age_bin = cut(age, breaks = seq(20, 80, by = 5))) |>
+  group_by(age_bin, sex) |>
+  summarise(pct_smoker = mean(smoke == "Yes"), .groups = "drop") |>
+  ggplot(aes(x = age_bin, y = pct_smoker)) +
+  geom_point() +
+  geom_smooth(aes(group = sex), se = FALSE) +
+  facet_wrap(~ sex) +
+  scale_y_continuous(labels = scales::label_percent()) +
+  labs(
+    title = "Share of ever-smokers by age and sex",
+    subtitle = "Older adults are more likely to be ever-smokers",
+    x = "Age bin",
+    y = "Percent ever-smoker",
+    caption = "Source: NHANES 2009-2012 via primer.tutorials::smokes"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Smoking remains a major public health concern and the likelihood of being an ever-smoker varies systematically by age and sex. Using a 1,000-adult sample from NHANES 2009-2012 we estimate the difference in probability of being an ever-smoker between a 30-year-old woman and a 70-year-old man.
