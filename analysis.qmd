@@ -10,6 +10,8 @@ execute:
 #| message: false
 library(tidyverse)
 library(primer.tutorials)
+library(tidymodels)
+library(broom)
 ```
 
 ```{r}
@@ -33,4 +35,28 @@ smokes |>
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-Smoking remains a major public health concern and the likelihood of being an ever-smoker varies systematically by age and sex. Using a 1,000-adult sample from NHANES 2009-2012 we estimate the difference in probability of being an ever-smoker between a 30-year-old woman and a 70-year-old man.
+```{r}
+#| cache: true
+fit_smokes <- logistic_reg(engine = "glm") |>
+  fit(smoke ~ age + sex, data = smokes)
+```
+
+```{r}
+library(easystats)
+check_predictions(extract_fit_engine(fit_smokes))
+```
+
+```{r}
+tidy(fit_smokes, conf.int = TRUE)
+```
+
+```{r}
+tidy(fit_smokes, conf.int = TRUE) |>
+  select(term, estimate, conf.low, conf.high) |>
+  knitr::kable(
+    caption = "Estimates and 95% CIs on log-odds scale. Source: NHANES 2009-2012 via primer.tutorials::smokes",
+    digits = 3
+  )
+```
+
+Smoking remains a major public health concern and the likelihood of being an ever-smoker varies systematically by age and sex. Using a 1,000-adult sample from NHANES 2009-2012 we estimate the difference in probability of being an ever-smoker between a 30-year-old woman and a 70-year-old man. One concern is that our NHANES data is from 2009 to 2012 while the campaign targets 2026 and smoking norms have shifted significantly during that gap which could mean the relationship between age and ever-smoker status no longer matches what we estimate. We model the probability of being an ever-smoker using logistic regression as a function of age and sex with Female as the reference category.

@@ -85,7 +85,78 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>Smoking remains a major public health concern and the likelihood of being an ever-smoker varies systematically by age and sex. Using a 1,000-adult sample from NHANES 2009-2012 we estimate the difference in probability of being an ever-smoker between a 30-year-old woman and a 70-year-old man.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code># Attaching packages: easystats 0.7.6
+✔ bayestestR  0.18.1   ✔ correlation 0.8.8 
+✔ datawizard  1.3.1    ✔ effectsize  1.0.2 
+✔ insight     1.5.1    ✔ modelbased  0.15.0
+✔ performance 0.17.0   ✔ parameters  0.29.1
+✔ report      0.6.4    ✔ see         0.14.0</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The model has an integer or a discrete response variable.
+  It is recommended to switch to a dot-plot style, e.g.
+  `plot(check_model(model), type = "discrete_dots"`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Ignoring unknown labels:
+• size : ""</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 7
+  term        estimate std.error statistic   p.value  conf.low conf.high
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept) -0.875     0.207       -4.22 0.0000241 -1.28       -0.471 
+2 age          0.00704   0.00387      1.82 0.0694    -0.000550    0.0147
+3 sexMale      0.545     0.129        4.22 0.0000245  0.292       0.798 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Estimates and 95% CIs on log-odds scale. Source: NHANES 2009-2012 via primer.tutorials::smokes</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.875</td>
+<td style="text-align: right;">-1.283</td>
+<td style="text-align: right;">-0.471</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">-0.001</td>
+<td style="text-align: right;">0.015</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sexMale</td>
+<td style="text-align: right;">0.545</td>
+<td style="text-align: right;">0.292</td>
+<td style="text-align: right;">0.798</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Smoking remains a major public health concern and the likelihood of being an ever-smoker varies systematically by age and sex. Using a 1,000-adult sample from NHANES 2009-2012 we estimate the difference in probability of being an ever-smoker between a 30-year-old woman and a 70-year-old man. One concern is that our NHANES data is from 2009 to 2012 while the campaign targets 2026 and smoking norms have shifted significantly during that gap which could mean the relationship between age and ever-smoker status no longer matches what we estimate. We model the probability of being an ever-smoker using logistic regression as a function of age and sex with Female as the reference category.</p>
 
 </main>
 <!-- /main column -->
